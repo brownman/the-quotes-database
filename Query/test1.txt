@@ -1,0 +1,29 @@
+
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+
+POST lyrics/_create/13
+{
+  "artist": "Ad Sheeran",
+  "title": "Shape of you",
+  "lyrics": "pull like a magnet doAlthough like"
+}
+
+POST lyrics/_create/14
+{
+  "artist": "Ad Sheeran",
+  "title": "Shape of you",
+  "lyrics": "pull like a magnet doAlthough like lll like"
+}
+
+
+POST _analyze
+{
+  "analyzer": "standard",
+  "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+}

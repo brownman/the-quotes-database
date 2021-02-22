@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2-runtime start ./src/main.js --name node_app",
-    "stop": "pm2-runtime stop node_app "
+    "start": "node ./src/main.js --name node_app",
+    "stop": "node stop node_app "
   },
   "repository": {
     "type": "git",

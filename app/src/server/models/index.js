@@ -1,14 +1,14 @@
 const { esclient, index, type } = require("../../elastic");
 
-async function getQuotes(req) {
+async function getLyrics(req) {
 
   const query = {
     query: {
       match: {
-        quote: {
-          query: req.text,
+        lyrics: {
+          query: req.lyrics,
           operator: "and",
-          fuzziness: "auto"
+          fuzziness: "1"
         }
       }
     }
@@ -26,8 +26,9 @@ async function getQuotes(req) {
   const values  = hits.hits.map((hit) => {
     return {
       id:     hit._id,
-      quote:  hit._source.quote,
-      author: hit._source.author,
+      lyrics:  hit._source.lyrics,
+      artist: hit._source.artist,
+      title: hit._source.title,
       score:  hit._score
     }
   });
@@ -39,18 +40,19 @@ async function getQuotes(req) {
 
 }
 
-async function insertNewQuote(quote, author) {
+async function insertNewLyrics(lyrics, artist, title) {
   return esclient.index({
     index,
     type,
     body: {
-      quote,
-      author
+      lyrics,
+      artist,
+      title
     }
   })
 }
 
 module.exports = {
-  getQuotes,
-  insertNewQuote
+  getLyrics,
+  insertNewLyrics
 }

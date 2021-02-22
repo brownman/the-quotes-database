@@ -1,3 +1,36 @@
-# The Quotes Database
+# The Lyrics Database
+```
+run from the CLI:
+-----------------
+docker-compose up #that should spin up dockers for node.js, elastic & kibana
 
-This is the repository for [**Fulltext search with Node.js and ElasticSearch on Docker**](https://www.hackdoor.io/articles/dkJ1VNgL/full-text-search-with-nodejs-and-elasticsearch-on-docker)
+- Kibana dev console:
+http://localhost:5601/app/dev_tools#/console?_g=()
+
+- Web-server Endpoints:
+----------------------
+- create index: "lyrics" and populate with data:
+http://localhost:8080/create_index
+
+- delete index: "lyrics"
+http://localhost:8080/delete_index
+
+- Try different queries and get scored results: 
+http://localhost:8080/look_for_song?lyrics=like+magnet
+http://localhost:8080/look_for_song?lyrics=like+maget
+http://localhost:8080/look_for_song?lyrics=like+magnek
+http://localhost:8080/look_for_song?lyrics=like+magnets
+-
+- [Status: TODO] make sure the query doesn't returns any result:
+http://localhost:8080/look_for_song?lyrics=lyke+mag
+
+- create new document using Curl:
+curl --request POST \
+     --url http://localhost:8080/new \
+     --header 'content-type: application/json' \
+     --data '{
+        "artist": "some artist",
+        "title": "some title",
+        "lyrics": "some lyrics"
+}'
+```

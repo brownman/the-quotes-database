@@ -1,5 +1,5 @@
 const elastic = require("../elastic");
-const quotes  = require(`./quotes.json`);
+const lyrics  = require(`./lyrics.json`);
 
 /**
  * @function createESAction
@@ -24,11 +24,11 @@ async function populateDatabase() {
 
   const docs = [];
 
-  for (const quote of quotes) {
+  for (const lyric of lyrics) {
     docs.push(esAction);
-    docs.push(quote);
+    docs.push(lyric);
   }
-
+  console.log({docs})
   return elastic.esclient.bulk({ body: docs });
 }
 

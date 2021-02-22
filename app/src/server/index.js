@@ -5,7 +5,7 @@ const routes       = require("./routes");
                      require("dotenv").config();
 
 const app  = express();
-const port = process.env.NODE_PORT || 3000;
+const port = process.env.NODE_PORT || 8080;
 
 /**
  * @function start
@@ -18,7 +18,7 @@ function start() {
   return  app.use(cors())
              .use(bodyParser.urlencoded({ extended: false }))
              .use(bodyParser.json())
-             .use("/quotes",routes)
+             .use("/",routes)
              .use((_req, res) => res.status(404).json({ success: false,error: "Route not found" }))
              .listen(port, () => console.log(`Server ready on port ${port}`));
 

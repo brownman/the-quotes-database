@@ -5,16 +5,16 @@ services:
   api:
     image: node:10.15.3-alpine
     container_name: tqd-node
-    build: .
+    build: ./app
     ports:
-      - 3000:3000
+      - 8080:8080 
     environment:
      - NODE_ENV=local
      - ES_HOST=elasticsearch
-     - NODE_PORT=3000
+     - NODE_PORT=8080
      - ELASTIC_URL=http://elasticsearch:9200
     volumes:
-      - .:/usr/src/app/quotes
+      - ./app/src/data:/usr/src/app/lyrics
     command: npm run start
     links:
         - elasticsearch
@@ -25,13 +25,11 @@ services:
 
   elasticsearch:
     container_name: tqd-elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
     volumes:
       - esdata:/usr/share/elasticsearch/data
-    environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.type=single-node
+    env_file:
+      - elastic/elastic.env
     logging:
       driver: none
     ports:
@@ -40,8 +38,18 @@ services:
     networks: 
       - esnet
 
-volumes:
-  esdata:
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.11.1
+    env_file:
+      - kibana/kibana.env
+    ports:
+      - 5601:5601
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch
 
 networks:
   esnet:
+volumes:
+  esdata:
