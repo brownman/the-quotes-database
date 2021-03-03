@@ -1,14 +1,14 @@
 const { esclient, index, type } = require("../../elastic");
 
 async function getLyrics(req) {
-
   const query = {
+    min_score: 1.0,
     query: {
       match: {
         lyrics: {
           query: req.lyrics,
           operator: "and",
-          fuzziness: "1"
+          fuzziness: 1,
         }
       }
     }

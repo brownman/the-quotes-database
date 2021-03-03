@@ -16,12 +16,13 @@ http://localhost:8080/create_index
 http://localhost:8080/delete_index
 
 - Try different queries and get scored results: 
+- Scored higher than 1:
 http://localhost:8080/look_for_song?lyrics=like+magnet
 http://localhost:8080/look_for_song?lyrics=like+maget
 http://localhost:8080/look_for_song?lyrics=like+magnek
 http://localhost:8080/look_for_song?lyrics=like+magnets
 -
-- [Status: TODO] make sure the query doesn't returns any result:
+- Scored less than 1 (And therefore filtered out by the min_score query parameter):
 http://localhost:8080/look_for_song?lyrics=lyke+mag
 
 - create new document using Curl:

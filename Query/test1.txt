@@ -1,6 +1,23 @@
 
-GET _search
+GET /_search
 {
+  "explain": true,
+  "min_score": 1.0,
+  "query": {
+    "match": {
+      "lyrics": {
+        "query": "lyke mag",
+        "operator": "and",
+        "fuzziness": 1
+      }
+    }
+  }
+}
+
+
+
+{
+GET lyrics/_search
   "query": {
     "match_all": {}
   }
