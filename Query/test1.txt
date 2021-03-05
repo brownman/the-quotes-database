@@ -1,3 +1,51 @@
+GET _search
+{
+  "query": {
+    "span_near": {
+      "clauses": [
+        {
+          "span_multi": {
+            "match": {
+              "fuzzy": {
+                "lyrics": {
+                  "fuzziness": "1",
+                  "value": "lyke"
+                }
+              }
+            }
+          }
+        },
+        {
+          "span_multi": {
+            "match": {
+              "fuzzy": {
+                "lyrics": {
+                  "fuzziness": "1",
+                  "value": "magnet"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "slop": 1,
+      "in_order": "true"
+    }
+  }
+}
+
+GET lyrics/_search //this condition gives the expected results but surely not the expected solution 
+{
+  "query": {
+    "bool" : {
+      "should": [
+        {  "term": { "lyrics": "mag" }},
+        { "prefix": { "lyrics": "like"}}
+      ]
+    }
+  }
+}
+
 
 GET /_search
 {

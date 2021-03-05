@@ -59,6 +59,8 @@ async function setLyricsMapping() {
       body: {
         properties: schema,
       },
+      filter: ["stemmer"]
+
     });
 
     console.log("Lyrics mapping created successfully");

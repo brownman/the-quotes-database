@@ -1,17 +1,45 @@
 const { esclient, index, type } = require("../../elastic");
 
 async function getLyrics(req) {
+  const arr = req.lyrics.split(' ');
+  if (arr.length !=2)
+      return null;
+
   const query = {
-    min_score: 1.0,
-    query: {
-      match: {
-        lyrics: {
-          query: req.lyrics,
-          operator: "and",
-          fuzziness: 1,
+ 
+      "query": {
+        "span_near": {
+          "clauses": [
+            {
+              "span_multi": {
+                "match": {
+                  "fuzzy": {
+                    "lyrics": {
+                      "fuzziness": "1",
+                      "value": arr[0]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "span_multi": {
+                "match": {
+                  "fuzzy": {
+                    "lyrics": {
+                      "fuzziness": "1",
+                      "value": arr[1]
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "slop": 1,
+          "in_order": "true"
         }
       }
-    }
+    
   }
 
   const { body: { hits } } = await esclient.search({
