@@ -1,4 +1,4 @@
-# The Lyrics Database 
+# The Lyrics Database  
 ```
 run from the CLI:
 -----------------
