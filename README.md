@@ -1,3 +1,4 @@
+1
 # The Lyrics Database      
 ```
 run from the CLI:
